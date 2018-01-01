@@ -8,16 +8,11 @@ const vm = Vue.component('HourHand', {
     :y1="computeY(cy, perc(r, -20), rotation)"
     :x2="computeX(cx, perc(r, 65), rotation)"
     :y2="computeY(cy, perc(r, 65), rotation)"
-    :stroke="hourColor"
+    stroke="${color.hour}"
     :stroke-width="r/12"/>`,
   props: ['cx', 'cy', 'r', 'hour'],
   methods: {
     computeX, computeY, perc
-  },
-  data: function () {
-    return {
-      hourColor: color.hour,
-    }
   },
   computed: {
     rotation: function () {
