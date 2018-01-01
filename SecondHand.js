@@ -27,9 +27,6 @@ const vm = Vue.component('SecondHand', {
     computeX, computeY, perc
   },
   computed: {
-    length: function () {
-      return perc(this.r, 12);
-    },
     rotation: function () {
       return sec2deg(this.second);
     }
