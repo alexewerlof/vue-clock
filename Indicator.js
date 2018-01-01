@@ -8,16 +8,11 @@ const vm = Vue.component('Indicator', {
     :y1="computeY(cy, r - length, rotation)"
     :x2="computeX(cx, perc(r, 95), rotation)"
     :y2="computeY(cy, perc(r, 95), rotation)"
-    :stroke="indicatorColor"
+    stroke="${color.indicator}"
     :stroke-width="big ? perc(this.r, 6) : perc(this.r, 2)" />`,
   props: ['cx', 'cy', 'r', 'n'],
   methods: {
     computeX, computeY, perc
-  },
-  data: function () {
-    return {
-      indicatorColor: color.indicator
-    };
   },
   computed: {
     big: function () {
