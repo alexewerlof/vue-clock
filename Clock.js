@@ -1,9 +1,6 @@
 import Vue from './node_modules/vue/dist/vue.esm.browser.js';
 import './Indicator.js';
-import './HourHand.js';
-import './MinuteHand.js';
-import './SecondHand.js';
-import { perc } from './util.js';
+import { hour2deg, minute2deg, second2deg, computeX, computeY, perc } from './util.js';
 import { color } from './settings.js';
 
 const vm = Vue.component('Clock', {
@@ -32,13 +29,45 @@ const vm = Vue.component('Clock', {
       :r="r"
       :n="n"
       />
-    <HourHand :cx="cx" :cy="cy" :r="r" :hour="hour" filter="url(#hourShadow)" />
-    <MinuteHand :cx="cx" :cy="cy" :r="r" :minute="minute" filter="url(#minuteShadow)" />
-    <SecondHand :cx="cx" :cy="cy" :r="r" :second="second" filter="url(#secondShadow)" />
+    <line
+      filter="url(#hourShadow)"
+      :x1="computeX(cx, perc(r, -20), hourRotation)"
+      :y1="computeY(cy, perc(r, -20), hourRotation)"
+      :x2="computeX(cx, perc(r, 65), hourRotation)"
+      :y2="computeY(cy, perc(r, 65), hourRotation)"
+      stroke="${color.hour}"
+      :stroke-width="r/12"/>
+    <line
+      filter="url(#minuteShadow)"
+      :x1="computeX(cx, perc(r, -20), minuteRotation)"
+      :y1="computeY(cy, perc(r, -20), minuteRotation)"
+      :x2="computeX(cx, perc(r, 95), minuteRotation)"
+      :y2="computeY(cy, perc(r, 95), minuteRotation)"
+      stroke="${color.minute}"
+      :stroke-width="r/16"/>
+    <g filter="url(#secondShadow)">
+      <line
+        :x1="computeX(cx, perc(r, -20), secondRotation)"
+        :y1="computeY(cy, perc(r, -20), secondRotation)"
+        :x2="computeX(cx, perc(r, 60), secondRotation)"
+        :y2="computeY(cy, perc(r, 60), secondRotation)"
+        stroke="${color.second}"
+        :stroke-width="r/40" />
+      <circle
+        :cx="computeX(cx, perc(r, 63), secondRotation)"
+        :cy="computeY(cy, perc(r, 63), secondRotation)"
+        :r="r/12"
+        fill="${color.second}" />
+      <circle
+        :cx="cx"
+        :cy="cy"
+        :r="r/20"
+        fill="${color.second}" />
+    </g>
   </svg>`,
   props: ['hour', 'minute', 'second'],
   methods: {
-    perc
+    perc, computeX, computeY
   },
   computed: {
     width: function () {
@@ -55,6 +84,15 @@ const vm = Vue.component('Clock', {
     },
     r: function () {
       return Math.min(this.width, this.height) / 2;
+    },
+    hourRotation: function () {
+      return hour2deg(this.hour);
+    },
+    minuteRotation: function () {
+      return minute2deg(this.minute);
+    },
+    secondRotation: function () {
+      return second2deg(this.second);
     }
   }
 });

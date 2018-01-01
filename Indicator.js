@@ -1,6 +1,6 @@
 import Vue from './node_modules/vue/dist/vue.esm.browser.js';
 import { color } from './settings.js';
-import { computeX, computeY, perc, min2deg } from './util.js';
+import { computeX, computeY, perc, minute2deg } from './util.js';
 
 const vm = Vue.component('Indicator', {
   template: `<line
@@ -22,7 +22,7 @@ const vm = Vue.component('Indicator', {
       return perc(this.r, this.big ? 28 : 12);
     },
     rotation: function () {
-      return min2deg(this.n);
+      return minute2deg(this.n);
     }
   }
 });

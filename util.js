@@ -3,9 +3,9 @@ export const toDegrees = (angle) => angle * 180 / Math.PI;
 
 export const hour2deg = (hour) => hour * 30;
 
-export const min2deg = (min) => min * 6;
+export const minute2deg = (min) => min * 6;
 
-export const sec2deg = min2deg;
+export const second2deg = minute2deg;
 
 export const rgb = (r, g, b) => `rgb(${r}, ${g}, ${b})`;
 
