@@ -1,5 +1,5 @@
 import Vue from './node_modules/vue/dist/vue.esm.browser.js';
-import './Face.js';
+import './Indicator.js';
 import './HourHand.js';
 import './MinuteHand.js';
 import './SecondHand.js';
@@ -19,7 +19,19 @@ const vm = Vue.component('Clock', {
         <feDropShadow dx="0" :dy="perc(r, 4)" stdDeviation="3" :floodColor="shadowColor" floodOpacity="0.5" />
       </filter>
     </defs>
-    <Face :cx="cx" :cy="cy" :r="r" />
+    <circle
+      :cx="cx"
+      :cy="cy"
+      :r="r"
+      fill="${color.face}" />
+    <Indicator
+      v-for="n in 60"
+      key="n"
+      :cx="cx"
+      :cy="cy"
+      :r="r"
+      :n="n"
+      />
     <HourHand :cx="cx" :cy="cy" :r="r" :hour="hour" filter="url(#hourShadow)" />
     <MinuteHand :cx="cx" :cy="cy" :r="r" :minute="minute" filter="url(#minuteShadow)" />
     <SecondHand :cx="cx" :cy="cy" :r="r" :second="second" filter="url(#secondShadow)" />
