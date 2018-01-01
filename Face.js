@@ -8,7 +8,11 @@ Vue.component('Face', {
   //          length={perc(r, 25)}
   //  width={perc(r, 6)}
   template: `<g>
-    <circle :cx="cx" :cy="cy" :r="r" :fill="faceColor" />
+    <circle
+      :cx="cx"
+      :cy="cy"
+      :r="r"
+      fill="${color.face}" />
     <Indicator
       v-for="n in 60"
       key="n"
@@ -19,11 +23,6 @@ Vue.component('Face', {
       />
     </g>`,
   props: ['cx', 'cy', 'r'],
-  data: function () {
-    return {
-      faceColor: color.face
-    };
-  },
   methods: {
     perc,
     min2deg
