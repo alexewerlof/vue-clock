@@ -7,7 +7,7 @@ import { perc } from './util.js';
 import { color } from './settings.js';
 
 const vm = Vue.component('Clock', {
-  template: `<svg :width="width" :height="height" :style="{margin: margin}">
+  template: `<svg :width="width" :height="height">
     <defs>
       <filter id="hourShadow" x="-50%" y="-50%" width="200%" height="200%" filterUnits="userSpaceOnUse">
         <feDropShadow dx="0" :dy="perc(r, 1)" stdDeviation="3" floodColor="${color.shadowColor}" floodOpacity="0.5" />
@@ -37,20 +37,15 @@ const vm = Vue.component('Clock', {
     <SecondHand :cx="cx" :cy="cy" :r="r" :second="second" filter="url(#secondShadow)" />
   </svg>`,
   props: ['hour', 'minute', 'second'],
-  data: function () {
-    return {
-      margin: 20,
-    }
-  },
   methods: {
     perc
   },
   computed: {
     width: function () {
-      return document.body.clientWidth - this.margin * 2;
+      return document.body.clientWidth;
     },
     height: function () {
-      return document.body.clientHeight - this.margin * 2;
+      return document.body.clientHeight;
     },
     cx: function () {
       return this.width / 2;
