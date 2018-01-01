@@ -10,13 +10,13 @@ const vm = Vue.component('Clock', {
   template: `<svg :width="width" :height="height" :style="{margin: margin}">
     <defs>
       <filter id="hourShadow" x="-50%" y="-50%" width="200%" height="200%" filterUnits="userSpaceOnUse">
-        <feDropShadow dx="0" :dy="perc(r, 1)" stdDeviation="3" :floodColor="shadowColor" floodOpacity="0.5" />
+        <feDropShadow dx="0" :dy="perc(r, 1)" stdDeviation="3" floodColor="${color.shadowColor}" floodOpacity="0.5" />
       </filter>
       <filter id="minuteShadow" x="-50%" y="-50%" width="200%" height="200%" filterUnits="userSpaceOnUse">
-        <feDropShadow dx="0" :dy="perc(r, 2)" stdDeviation="3" :floodColor="shadowColor" floodOpacity="0.5" />
+        <feDropShadow dx="0" :dy="perc(r, 2)" stdDeviation="3" floodColor="${color.shadowColor}" floodOpacity="0.5" />
       </filter>
       <filter id="secondShadow" x="-50%" y="-50%" width="200%" height="200%" filterUnits="userSpaceOnUse">
-        <feDropShadow dx="0" :dy="perc(r, 4)" stdDeviation="3" :floodColor="shadowColor" floodOpacity="0.5" />
+        <feDropShadow dx="0" :dy="perc(r, 4)" stdDeviation="3" floodColor="${color.shadowColor}" floodOpacity="0.5" />
       </filter>
     </defs>
     <circle
@@ -40,7 +40,6 @@ const vm = Vue.component('Clock', {
   data: function () {
     return {
       margin: 20,
-      shadowColor: color.shadowColor
     }
   },
   methods: {
