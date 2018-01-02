@@ -6,6 +6,6 @@ export const color = {
   hour: gray(60),
   minute: gray(60),
   second: rgb(213, 74, 62),
-  indicator: gray(60),
+  indicator: gray(55),
   shadow: gray(30)
 };

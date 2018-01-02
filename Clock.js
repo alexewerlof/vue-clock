@@ -6,14 +6,14 @@ import { color } from './settings.js';
 const vm = Vue.component('Clock', {
   template: `<svg :width="width" :height="height">
     <defs>
-      <filter id="hourShadow" x="-50%" y="-50%" width="200%" height="200%" filterUnits="userSpaceOnUse">
-        <feDropShadow dx="0" :dy="perc(r, 1)" stdDeviation="3" floodColor="${color.shadowColor}" floodOpacity="0.5" />
+      <filter id="HourShadow" x="-50%" y="-50%" width="200%" height="200%" filter-units="userSpaceOnUse">
+        <feDropShadow dx="0" :dy="perc(r, 1)" std-deviation="3" flood-color="${color.shadowColor}" flood-opacity="0.5" />
       </filter>
-      <filter id="minuteShadow" x="-50%" y="-50%" width="200%" height="200%" filterUnits="userSpaceOnUse">
-        <feDropShadow dx="0" :dy="perc(r, 2)" stdDeviation="3" floodColor="${color.shadowColor}" floodOpacity="0.5" />
+      <filter id="MinuteShadow" x="-50%" y="-50%" width="200%" height="200%" filter-units="userSpaceOnUse">
+        <feDropShadow dx="0" :dy="perc(r, 2)" std-deviation="3" flood-color="${color.shadowColor}" flood-opacity="0.5" />
       </filter>
-      <filter id="secondShadow" x="-50%" y="-50%" width="200%" height="200%" filterUnits="userSpaceOnUse">
-        <feDropShadow dx="0" :dy="perc(r, 4)" stdDeviation="3" floodColor="${color.shadowColor}" floodOpacity="0.5" />
+      <filter id="SecondShadow" x="-50%" y="-50%" width="200%" height="200%" filter-units="userSpaceOnUse">
+        <feDropShadow dx="0" :dy="perc(r, 4)" std-deviation="3" flood-color="${color.shadowColor}" flood-opacity="0.5" />
       </filter>
     </defs>
     <circle
@@ -33,7 +33,7 @@ const vm = Vue.component('Clock', {
     </g>
     <g>
       <line
-        filter="url(#hourShadow)"
+        filter="url(#HourShadow)"
         :x1="computeX(cx, perc(r, -20), hourRotation)"
         :y1="computeY(cy, perc(r, -20), hourRotation)"
         :x2="computeX(cx, perc(r, 65), hourRotation)"
@@ -43,7 +43,7 @@ const vm = Vue.component('Clock', {
     </g>
     <g>
       <line
-        filter="url(#minuteShadow)"
+        filter="url(#MinuteShadow)"
         :x1="computeX(cx, perc(r, -20), minuteRotation)"
         :y1="computeY(cy, perc(r, -20), minuteRotation)"
         :x2="computeX(cx, perc(r, 95), minuteRotation)"
@@ -51,7 +51,7 @@ const vm = Vue.component('Clock', {
         stroke="${color.minute}"
         :stroke-width="r/16"/>
     </g>
-    <g filter="url(#secondShadow)">
+    <g filter="url(#SecondShadow)">
       <line
         :x1="computeX(cx, perc(r, -20), secondRotation)"
         :y1="computeY(cy, perc(r, -20), secondRotation)"
