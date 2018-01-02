@@ -21,30 +21,36 @@ const vm = Vue.component('Clock', {
       :cy="cy"
       :r="r"
       fill="${color.face}" />
-    <Indicator
-      v-for="n in 60"
-      key="n"
-      :cx="cx"
-      :cy="cy"
-      :r="r"
-      :n="n"
-      />
-    <line
-      filter="url(#hourShadow)"
-      :x1="computeX(cx, perc(r, -20), hourRotation)"
-      :y1="computeY(cy, perc(r, -20), hourRotation)"
-      :x2="computeX(cx, perc(r, 65), hourRotation)"
-      :y2="computeY(cy, perc(r, 65), hourRotation)"
-      stroke="${color.hour}"
-      :stroke-width="r/12"/>
-    <line
-      filter="url(#minuteShadow)"
-      :x1="computeX(cx, perc(r, -20), minuteRotation)"
-      :y1="computeY(cy, perc(r, -20), minuteRotation)"
-      :x2="computeX(cx, perc(r, 95), minuteRotation)"
-      :y2="computeY(cy, perc(r, 95), minuteRotation)"
-      stroke="${color.minute}"
-      :stroke-width="r/16"/>
+    <g>
+      <Indicator
+        v-for="n in 60"
+        key="n"
+        :cx="cx"
+        :cy="cy"
+        :r="r"
+        :n="n"
+        />
+    </g>
+    <g>
+      <line
+        filter="url(#hourShadow)"
+        :x1="computeX(cx, perc(r, -20), hourRotation)"
+        :y1="computeY(cy, perc(r, -20), hourRotation)"
+        :x2="computeX(cx, perc(r, 65), hourRotation)"
+        :y2="computeY(cy, perc(r, 65), hourRotation)"
+        stroke="${color.hour}"
+        :stroke-width="r/12"/>
+    </g>
+    <g>
+      <line
+        filter="url(#minuteShadow)"
+        :x1="computeX(cx, perc(r, -20), minuteRotation)"
+        :y1="computeY(cy, perc(r, -20), minuteRotation)"
+        :x2="computeX(cx, perc(r, 95), minuteRotation)"
+        :y2="computeY(cy, perc(r, 95), minuteRotation)"
+        stroke="${color.minute}"
+        :stroke-width="r/16"/>
+    </g>
     <g filter="url(#secondShadow)">
       <line
         :x1="computeX(cx, perc(r, -20), secondRotation)"
