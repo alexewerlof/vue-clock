@@ -27,9 +27,9 @@ function updateTime() {
     const second = now.getSeconds() + now.getMilliseconds() / 1000;
     const minute = now.getMinutes() + second / 60;
     const hour = now.getHours() + minute / 60;
-    vm.hour = floor(hour, 1);
-    vm.minute = floor(minute, 1);
-    vm.second = floor(second, 2);
+    vm.hour = floor(hour, 0.2);
+    vm.minute = floor(minute, 1/12);
+    vm.second = floor(second, 0.1);
     vm.width = document.body.clientWidth;
     vm.height = document.body.clientHeight;
 }

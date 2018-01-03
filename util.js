@@ -32,7 +32,7 @@ export function perc(x, percentage = 100, natural = false) {
   return natural ? Math.round(ret) : ret;
 }
 
-export function floor(x, digits = 0) {
+export function floor(x, resolution = 1, digits = 2) {
   const tenPows = 10 ** digits;
-  return Math.floor(x * tenPows) / tenPows;
+  return Math.floor(Math.floor(x / resolution) * tenPows * resolution) / tenPows;
 }
