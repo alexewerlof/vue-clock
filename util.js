@@ -31,3 +31,8 @@ export function perc(x, percentage = 100, natural = false) {
   const ret = x * percentage / 100;
   return natural ? Math.round(ret) : ret;
 }
+
+export function floor(x, digits = 0) {
+  const tenPows = 10 ** digits;
+  return Math.floor(x * tenPows) / tenPows;
+}
