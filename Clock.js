@@ -10,6 +10,7 @@ const vm = Vue.component('Clock', {
       :cy="cy"
       :r="r"
       fill="${color.face}" />
+    <image :x="perc(r, 25)" :y="perc(r, 25)" :width="perc(r, 50)" :height="perc(r, 50)" xlink:href="logo.svg" />
     <g>
       <Indicator
         v-for="n in 60"
