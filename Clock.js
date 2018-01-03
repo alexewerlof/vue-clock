@@ -5,17 +5,6 @@ import { color } from './settings.js';
 
 const vm = Vue.component('Clock', {
   template: `<svg :width="width" :height="height">
-    <defs>
-      <filter id="HourShadow" x="-50%" y="-50%" width="200%" height="200%" filter-units="userSpaceOnUse">
-        <feDropShadow dx="0" :dy="perc(r, 1)" std-deviation="3" flood-color="${color.shadowColor}" flood-opacity="0.5" />
-      </filter>
-      <filter id="MinuteShadow" x="-50%" y="-50%" width="200%" height="200%" filter-units="userSpaceOnUse">
-        <feDropShadow dx="0" :dy="perc(r, 2)" std-deviation="3" flood-color="${color.shadowColor}" flood-opacity="0.5" />
-      </filter>
-      <filter id="SecondShadow" x="-50%" y="-50%" width="200%" height="200%" filter-units="userSpaceOnUse">
-        <feDropShadow dx="0" :dy="perc(r, 4)" std-deviation="3" flood-color="${color.shadowColor}" flood-opacity="0.5" />
-      </filter>
-    </defs>
     <circle
       :cx="cx"
       :cy="cy"
@@ -33,7 +22,6 @@ const vm = Vue.component('Clock', {
     </g>
     <g>
       <line
-        filter="url(#HourShadow)"
         :x1="computeX(cx, perc(r, -20), hourRotation)"
         :y1="computeY(cy, perc(r, -20), hourRotation)"
         :x2="computeX(cx, perc(r, 65), hourRotation)"
@@ -43,7 +31,6 @@ const vm = Vue.component('Clock', {
     </g>
     <g>
       <line
-        filter="url(#MinuteShadow)"
         :x1="computeX(cx, perc(r, -20), minuteRotation)"
         :y1="computeY(cy, perc(r, -20), minuteRotation)"
         :x2="computeX(cx, perc(r, 95), minuteRotation)"
@@ -51,7 +38,7 @@ const vm = Vue.component('Clock', {
         stroke="${color.minute}"
         :stroke-width="r/16"/>
     </g>
-    <g filter="url(#SecondShadow)">
+    <g>
       <line
         :x1="computeX(cx, perc(r, -20), secondRotation)"
         :y1="computeY(cy, perc(r, -20), secondRotation)"
@@ -71,17 +58,11 @@ const vm = Vue.component('Clock', {
         fill="${color.second}" />
     </g>
   </svg>`,
-  props: ['hour', 'minute', 'second'],
+  props: ['hour', 'minute', 'second', 'width', 'height'],
   methods: {
     perc, computeX, computeY
   },
   computed: {
-    width: function () {
-      return document.body.clientWidth;
-    },
-    height: function () {
-      return document.body.clientHeight;
-    },
     cx: function () {
       return this.width / 2;
     },
