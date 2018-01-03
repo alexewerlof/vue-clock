@@ -29,7 +29,7 @@ function updateTime() {
     const hour = now.getHours() + minute / 60;
     vm.hour = floor(hour, 0.2);
     vm.minute = floor(minute, 1/12);
-    vm.second = floor(second, 0.1);
+    vm.second = floor(second, 0.01);
     vm.width = document.body.clientWidth;
     vm.height = document.body.clientHeight;
 }

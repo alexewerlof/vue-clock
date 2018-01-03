@@ -4,13 +4,24 @@ import { hour2deg, minute2deg, second2deg, computeX, computeY, perc } from './ut
 import { color } from './settings.js';
 
 const vm = Vue.component('Clock', {
-  template: `<svg :width="width" :height="height">
+  template: `<svg :width="width" :height="height" style="background-color:${color.bg}">
     <circle
       :cx="cx"
       :cy="cy"
       :r="r"
       fill="${color.face}" />
-    <image :x="perc(r, 25)" :y="perc(r, 25)" :width="perc(r, 50)" :height="perc(r, 50)" xlink:href="logo.svg" />
+    <image
+      :x="cx - perc(r, 25)"
+      :y="cy - perc(r, 70)"
+      :width="perc(r, 50)"
+      :height="perc(r, 50)"
+      xlink:href="logo.svg" />
+    <text
+      text-anchor="middle"
+      :font-size="perc(r, 10)"
+      :x="cx"
+      :y="cy - perc(r, 20)"
+      >Ewerlöf</text>
     <g>
       <Indicator
         v-for="n in 60"
