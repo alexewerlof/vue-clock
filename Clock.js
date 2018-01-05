@@ -24,7 +24,7 @@ const vm = Vue.component('Clock', {
       fill="${color.hour}"
       >Ewerlöf</text>
     <path id="MadeInSwedenCurve"
-      :d="'M ' + comXY(102, -165) + ', Q ' + comXY(104, -180) + ', ' + comXY(102, 165)" stroke="transparent" fill="transparent"/>
+      :d="'M ' + comXY(102, -165) + ' Q' + comXY(104, -180) + ' ' + comXY(102, 165)" stroke="transparent" fill="transparent"/>
     <text :font-size="per(6)" text-anchor="middle">
       <textPath xlink:href="#MadeInSwedenCurve" startOffset="50%" fill="${color.hour}">
         Made in Sweden
@@ -93,7 +93,7 @@ const vm = Vue.component('Clock', {
       return computeY(this.cy, this.per(rPercentage), rotationDeg);
     },
     comXY(rPercentage, rotationDeg) {
-      return this.comX(rPercentage, rotationDeg) + ', ' + this.comY(rPercentage, rotationDeg);
+      return this.comX(rPercentage, rotationDeg) + ' ' + this.comY(rPercentage, rotationDeg);
     }
   },
   computed: {

@@ -36,3 +36,33 @@ export function floor(x, resolution = 1, digits = 2) {
   const tenPows = 10 ** digits;
   return Math.floor(Math.floor(x / resolution) * tenPows * resolution) / tenPows;
 }
+
+// This is not used yet but is an idea that can make things easier in the future
+export class Poly {
+  constructor(cx, cy, r) {
+    this.cx = cx;
+    this.cy = cy;
+    this.r = r;
+  }
+
+  perc(rPerc = 100) {
+    return this.r * rPerc / 100;
+  }
+
+  comX(rotDeg, rPerc = 100) {
+    return computeX(this.cx, perc(rPerc), rotDeg)
+  }
+
+  comY(rotDeg, rPerc = 100) {
+    return computeY(this.cy, perc(rPerc), rotDeg)
+  }
+
+  comXY(rotDeg, rPerc = 100) {
+    return this.comX(this.cx, rPerc, rotDeg) + ' ' + this.comY(this.cx, rPerc, rotDeg);
+  }
+
+  svgCmd(cmdChar, rotDev, rPerc) {
+    return cmdChar + ' ' + comXY(rotDeg, rPerc);
+  }
+
+}
