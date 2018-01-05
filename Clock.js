@@ -11,21 +11,22 @@ const vm = Vue.component('Clock', {
       :r="r"
       fill="${color.face}" />
     <image
-      :x="cx - perc(r, 25)"
-      :y="cy - perc(r, 70)"
-      :width="perc(r, 50)"
-      :height="perc(r, 50)"
+      :x="cx - perN(25)"
+      :y="cy - perN(70)"
+      :width="perN(50)"
+      :height="perN(50)"
       xlink:href="logo.svg" />
     <text
       text-anchor="middle"
-      :font-size="perc(r, 10)"
+      :font-size="perN(10)"
       :x="cx"
-      :y="cy - perc(r, 20)"
+      :y="cy - perN(20)"
+      fill="${color.hour}"
       >Ewerlöf</text>
     <path id="MadeInSwedenCurve"
-      :d="svgCmd(cx, cy, 'M', r, -120) + ',' + svgCmd(cx, cy, 'Q', r, -90) + ',' + svgCmd(cx, cy, '', r, -70)" stroke="black" fill="red"/>
-    <text font-size="42.5">
-      <textPath xlink:href="#MadeInSwedenCurve">
+      :d="'M ' + comXY(102, -165) + ', Q ' + comXY(104, -180) + ', ' + comXY(102, 165)" stroke="transparent" fill="transparent"/>
+    <text :font-size="perN(6)" text-anchor="middle">
+      <textPath xlink:href="#MadeInSwedenCurve" startOffset="50%" fill="${color.hour}">
         Made in Sweden
       </textPath>
     </text>
@@ -41,33 +42,33 @@ const vm = Vue.component('Clock', {
     </g>
     <g>
       <line
-        :x1="computeX(cx, perc(r, -20), hourRotation)"
-        :y1="computeY(cy, perc(r, -20), hourRotation)"
-        :x2="computeX(cx, perc(r, 65), hourRotation)"
-        :y2="computeY(cy, perc(r, 65), hourRotation)"
+        :x1="comX(-20, hourRotation)"
+        :y1="comY(-20, hourRotation)"
+        :x2="comX(65, hourRotation)"
+        :y2="comY(65, hourRotation)"
         stroke="${color.hour}"
         :stroke-width="r/12"/>
     </g>
     <g>
       <line
-        :x1="computeX(cx, perc(r, -20), minuteRotation)"
-        :y1="computeY(cy, perc(r, -20), minuteRotation)"
-        :x2="computeX(cx, perc(r, 95), minuteRotation)"
-        :y2="computeY(cy, perc(r, 95), minuteRotation)"
+        :x1="comX(-20, minuteRotation)"
+        :y1="comY(-20, minuteRotation)"
+        :x2="comX(95, minuteRotation)"
+        :y2="comY(95, minuteRotation)"
         stroke="${color.minute}"
         :stroke-width="r/16"/>
     </g>
     <g>
       <line
-        :x1="computeX(cx, perc(r, -20), secondRotation)"
-        :y1="computeY(cy, perc(r, -20), secondRotation)"
-        :x2="computeX(cx, perc(r, 60), secondRotation)"
-        :y2="computeY(cy, perc(r, 60), secondRotation)"
+        :x1="comX(-20, secondRotation)"
+        :y1="comY(-20, secondRotation)"
+        :x2="comX(60, secondRotation)"
+        :y2="comY(60, secondRotation)"
         stroke="${color.second}"
         :stroke-width="r/40" />
       <circle
-        :cx="computeX(cx, perc(r, 63), secondRotation)"
-        :cy="computeY(cy, perc(r, 63), secondRotation)"
+        :cx="comX(63, secondRotation)"
+        :cy="comY(63, secondRotation)"
         :r="r/12"
         fill="${color.second}" />
       <circle
@@ -79,7 +80,26 @@ const vm = Vue.component('Clock', {
   </svg>`,
   props: ['hour', 'minute', 'second', 'width', 'height'],
   methods: {
-    perc, computeX, computeY, svgCmd
+    perc, computeX, computeY, svgCmd,
+    // Returns a percentage of the r
+    per(percentage = 100) {
+      return this.r * percentage / 100;
+    },
+    // Like per() but always returns a natural number
+    perN(percentage = 100) {
+      return Math.round(this.per(percentage));
+    },
+    // Compute X based on the current cx and r
+    comX(rPercentage, rotationDeg) {
+      return computeX(this.cx, this.perN(rPercentage), rotationDeg);
+    },
+    // Compute Y based on the current cy and r
+    comY(rPercentage, rotationDeg) {
+      return computeY(this.cy, this.perN(rPercentage), rotationDeg);
+    },
+    comXY(rPercentage, rotationDeg) {
+      return this.comX(rPercentage, rotationDeg) + ', ' + this.comY(rPercentage, rotationDeg);
+    }
   },
   computed: {
     cx: function () {
