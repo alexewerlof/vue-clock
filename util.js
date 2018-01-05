@@ -26,21 +26,6 @@ export function computeXY(cx, cy, r, rotation) {
   };
 }
 
-export function svgCmd(cx, cy, cmd, r, rotation) {
-  return `${cmd} ${computeX(cx, r, rotation)} ${computeY(cy, r, rotation)}`
-}
-
-export function svgCmds(cx, cy, ...cmd_r_rotation) {
-  const ret = [];
-  for (let i = 0; i + 2 < cmd_r_rotation.length; i += 3) {
-    const cmd = cmd_r_rotation[i];
-    const r = cmd_r_rotation[i + 1];
-    const rotation = cmd_r_rotation[i + 2];
-    ret.push(svgCmd(cx, cy, cmd, r, rotation));
-  }
-  return ret.join(', ');
-}
-
 // Calculate percentage on an absolute value
 export function perc(x, percentage = 100, natural = false) {
   const ret = x * percentage / 100;

@@ -1,6 +1,6 @@
 import Vue from './node_modules/vue/dist/vue.esm.browser.js';
 import './Indicator.js';
-import { hour2deg, minute2deg, second2deg, computeX, computeY, svgCmd, perc } from './util.js';
+import { hour2deg, minute2deg, second2deg, computeX, computeY } from './util.js';
 import { color } from './settings.js';
 
 const vm = Vue.component('Clock', {
@@ -11,21 +11,21 @@ const vm = Vue.component('Clock', {
       :r="r"
       fill="${color.face}" />
     <image
-      :x="cx - perN(25)"
-      :y="cy - perN(70)"
-      :width="perN(50)"
-      :height="perN(50)"
+      :x="cx - per(25)"
+      :y="cy - per(70)"
+      :width="per(50)"
+      :height="per(50)"
       xlink:href="logo.svg" />
     <text
       text-anchor="middle"
-      :font-size="perN(10)"
+      :font-size="per(10)"
       :x="cx"
-      :y="cy - perN(20)"
+      :y="cy - per(20)"
       fill="${color.hour}"
       >Ewerlöf</text>
     <path id="MadeInSwedenCurve"
       :d="'M ' + comXY(102, -165) + ', Q ' + comXY(104, -180) + ', ' + comXY(102, 165)" stroke="transparent" fill="transparent"/>
-    <text :font-size="perN(6)" text-anchor="middle">
+    <text :font-size="per(6)" text-anchor="middle">
       <textPath xlink:href="#MadeInSwedenCurve" startOffset="50%" fill="${color.hour}">
         Made in Sweden
       </textPath>
@@ -65,37 +65,32 @@ const vm = Vue.component('Clock', {
         :x2="comX(60, secondRotation)"
         :y2="comY(60, secondRotation)"
         stroke="${color.second}"
-        :stroke-width="r/40" />
+        :stroke-width="per(2)" />
       <circle
         :cx="comX(63, secondRotation)"
         :cy="comY(63, secondRotation)"
-        :r="r/12"
+        :r="per(8)"
         fill="${color.second}" />
       <circle
         :cx="cx"
         :cy="cy"
-        :r="r/20"
+        :r="per(5)"
         fill="${color.second}" />
     </g>
   </svg>`,
   props: ['hour', 'minute', 'second', 'width', 'height'],
   methods: {
-    perc, computeX, computeY, svgCmd,
     // Returns a percentage of the r
     per(percentage = 100) {
       return this.r * percentage / 100;
     },
-    // Like per() but always returns a natural number
-    perN(percentage = 100) {
-      return Math.round(this.per(percentage));
-    },
     // Compute X based on the current cx and r
     comX(rPercentage, rotationDeg) {
-      return computeX(this.cx, this.perN(rPercentage), rotationDeg);
+      return computeX(this.cx, this.per(rPercentage), rotationDeg);
     },
     // Compute Y based on the current cy and r
     comY(rPercentage, rotationDeg) {
-      return computeY(this.cy, this.perN(rPercentage), rotationDeg);
+      return computeY(this.cy, this.per(rPercentage), rotationDeg);
     },
     comXY(rPercentage, rotationDeg) {
       return this.comX(rPercentage, rotationDeg) + ', ' + this.comY(rPercentage, rotationDeg);
