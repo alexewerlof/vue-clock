@@ -1,6 +1,6 @@
 import Vue from './node_modules/vue/dist/vue.esm.browser.js';
 import './Indicator.js';
-import { hour2deg, minute2deg, second2deg, computeX, computeY, perc } from './util.js';
+import { hour2deg, minute2deg, second2deg, computeX, computeY, svgCmd, perc } from './util.js';
 import { color } from './settings.js';
 
 const vm = Vue.component('Clock', {
@@ -22,6 +22,13 @@ const vm = Vue.component('Clock', {
       :x="cx"
       :y="cy - perc(r, 20)"
       >Ewerlöf</text>
+    <path id="MadeInSwedenCurve"
+      :d="svgCmd(cx, cy, 'M', r, -120) + ',' + svgCmd(cx, cy, 'Q', r, -90) + ',' + svgCmd(cx, cy, '', r, -70)" stroke="black" fill="red"/>
+    <text font-size="42.5">
+      <textPath xlink:href="#MadeInSwedenCurve">
+        Made in Sweden
+      </textPath>
+    </text>
     <g>
       <Indicator
         v-for="n in 60"
@@ -72,7 +79,7 @@ const vm = Vue.component('Clock', {
   </svg>`,
   props: ['hour', 'minute', 'second', 'width', 'height'],
   methods: {
-    perc, computeX, computeY
+    perc, computeX, computeY, svgCmd
   },
   computed: {
     cx: function () {
