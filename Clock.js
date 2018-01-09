@@ -1,31 +1,31 @@
 import Vue from './node_modules/vue/dist/vue.esm.browser.js';
 import './Indicator.js';
-import { hour2degF, minute2degF, second2degF, computeX, computeY } from './util.js';
+import { hour2degF, minute2degF, second2degF, computeX, computeY, Poly } from './util.js';
 import { color } from './settings.js';
 
 const vm = Vue.component('Clock', {
   template: `<svg :width="width" :height="height" style="background-color:${color.bg}">
     <circle
-      :cx="cx"
-      :cy="cy"
-      :r="r"
+      :cx="poly.cx"
+      :cy="poly.cy"
+      :r="poly.r"
       fill="${color.face}" />
     <image
-      :x="cx - per(25)"
-      :y="cy - per(70)"
-      :width="per(50)"
-      :height="per(50)"
+      :x="poly.cx - poly.perc(25)"
+      :y="poly.cy - poly.perc(70)"
+      :width="poly.perc(50)"
+      :height="poly.perc(50)"
       xlink:href="logo.svg" />
     <text
       text-anchor="middle"
-      :font-size="per(10)"
-      :x="cx"
-      :y="cy - per(20)"
+      :font-size="poly.perc(10)"
+      :x="poly.cx"
+      :y="poly.cy - poly.perc(20)"
       fill="${color.hour}"
       >Ewerlöf</text>
     <path id="MadeInSwedenCurve"
-      :d="'M ' + comXY(102, -165) + ' Q' + comXY(104, -180) + ' ' + comXY(102, 165)" stroke="transparent" fill="transparent"/>
-    <text :font-size="per(6)" text-anchor="middle">
+      :d="poly.cmdXY('M', -165, 102) + poly.cmdXY(' Q', -180, 104) + ' ' + poly.XY(165, 102)" stroke="transparent" fill="transparent"/>
+    <text :font-size="poly.perc(6)" text-anchor="middle">
       <textPath xlink:href="#MadeInSwedenCurve" startOffset="50%" fill="${color.hour}">
         Made in Sweden
       </textPath>
@@ -34,85 +34,65 @@ const vm = Vue.component('Clock', {
       <Indicator
         v-for="n in 60"
         key="n"
-        :cx="cx"
-        :cy="cy"
-        :r="r"
+        :cx="poly.cx"
+        :cy="poly.cy"
+        :r="poly.r"
         :n="n"
         />
     </g>
     <g>
       <line
-        :x1="comX(-20, hourRotation)"
-        :y1="comY(-20, hourRotation)"
-        :x2="comX(65, hourRotation)"
-        :y2="comY(65, hourRotation)"
+        :x1="poly.X(hourRot, -20)"
+        :y1="poly.Y(hourRot, -20)"
+        :x2="poly.X(hourRot, 65)"
+        :y2="poly.Y(hourRot, 65)"
         stroke="${color.hour}"
-        :stroke-width="r/12"/>
+        :stroke-width="poly.perc(8.3)"/>
     </g>
     <g>
       <line
-        :x1="comX(-20, minuteRotation)"
-        :y1="comY(-20, minuteRotation)"
-        :x2="comX(95, minuteRotation)"
-        :y2="comY(95, minuteRotation)"
+        :x1="poly.X(minRot, -20)"
+        :y1="poly.Y(minRot, -20)"
+        :x2="poly.X(minRot, 95)"
+        :y2="poly.Y(minRot, 95)"
         stroke="${color.minute}"
-        :stroke-width="r/16"/>
+        :stroke-width="poly.perc(6.25)"/>
     </g>
     <g>
       <line
-        :x1="comX(-20, secondRotation)"
-        :y1="comY(-20, secondRotation)"
-        :x2="comX(60, secondRotation)"
-        :y2="comY(60, secondRotation)"
+        :x1="poly.X(secRot, -20)"
+        :y1="poly.Y(secRot, -20)"
+        :x2="poly.X(secRot, 60)"
+        :y2="poly.Y(secRot, 60)"
         stroke="${color.second}"
-        :stroke-width="per(2)" />
+        :stroke-width="poly.perc(2)" />
       <circle
-        :cx="comX(63, secondRotation)"
-        :cy="comY(63, secondRotation)"
-        :r="per(8)"
+        :cx="poly.X(secRot, 63)"
+        :cy="poly.Y(secRot, 63)"
+        :r="poly.perc(8)"
         fill="${color.second}" />
       <circle
-        :cx="cx"
-        :cy="cy"
-        :r="per(5)"
+        :cx="poly.cx"
+        :cy="poly.cy"
+        :r="poly.perc(5)"
         fill="${color.second}" />
     </g>
   </svg>`,
   props: ['hour', 'minute', 'second', 'width', 'height'],
-  methods: {
-    // Returns a percentage of the r
-    per(percentage = 100) {
-      return this.r * percentage / 100;
-    },
-    // Compute X based on the current cx and r
-    comX(rPercentage, rotationDeg) {
-      return computeX(this.cx, this.per(rPercentage), rotationDeg);
-    },
-    // Compute Y based on the current cy and r
-    comY(rPercentage, rotationDeg) {
-      return computeY(this.cy, this.per(rPercentage), rotationDeg);
-    },
-    comXY(rPercentage, rotationDeg) {
-      return this.comX(rPercentage, rotationDeg) + ' ' + this.comY(rPercentage, rotationDeg);
-    }
-  },
   computed: {
-    cx: function () {
-      return this.width / 2;
+    poly() {
+      const cx = this.width / 2;
+      const cy = this.height / 2;
+      const r = Math.min(this.width, this.height) / 2;
+      return new Poly(cx, cy, r);
     },
-    cy: function () {
-      return this.height / 2;
-    },
-    r: function () {
-      return Math.min(this.width, this.height) / 2;
-    },
-    hourRotation: function () {
+    hourRot() {
       return hour2degF(this.hour, 5);
     },
-    minuteRotation: function () {
+    minRot() {
       return minute2degF(this.minute, 12);
     },
-    secondRotation: function () {
+    secRot() {
       return second2degF(this.second, 30);
     }
   }

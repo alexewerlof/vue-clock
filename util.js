@@ -57,29 +57,33 @@ export function second2degF(sec, steps1) {
 // This is not used yet but is an idea that can make things easier in the future
 export class Poly {
   constructor(cx, cy, r) {
-    this.cx = cx;
-    this.cy = cy;
-    this.r = r;
+    if (Number.isFinite(cx) && Number.isFinite(cy) && Number.isFinite(r)) {
+      this.cx = cx;
+      this.cy = cy;
+      this.r = r;
+    } else {
+      throw `At least one of the coordinates are not a number ${cx} ${cy} ${r}`
+    }
   }
 
   perc(rPerc = 100) {
     return this.r * rPerc / 100;
   }
 
-  comX(rotDeg, rPerc = 100) {
-    return computeX(this.cx, perc(rPerc), rotDeg)
+  X(rotDeg, rPerc = 100) {
+    return computeX(this.cx, this.perc(rPerc), rotDeg)
   }
 
-  comY(rotDeg, rPerc = 100) {
-    return computeY(this.cy, perc(rPerc), rotDeg)
+  Y(rotDeg, rPerc = 100) {
+    return computeY(this.cy, this.perc(rPerc), rotDeg)
   }
 
-  comXY(rotDeg, rPerc = 100) {
-    return this.comX(this.cx, rPerc, rotDeg) + ' ' + this.comY(this.cx, rPerc, rotDeg);
+  XY(rotDeg, rPerc = 100) {
+    return this.X(rotDeg, rPerc) + ' ' + this.Y(rotDeg, rPerc);
   }
 
-  svgCmd(cmdChar, rotDev, rPerc) {
-    return cmdChar + ' ' + comXY(rotDeg, rPerc);
+  cmdXY(cmdChar, rotDeg, rPerc) {
+    return cmdChar + ' ' + this.XY(rotDeg, rPerc);
   }
 
 }
