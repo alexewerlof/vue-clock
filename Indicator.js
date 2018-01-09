@@ -1,27 +1,30 @@
 import Vue from './node_modules/vue/dist/vue.esm.browser.js';
 import { color } from './settings.js';
-import { computeX, computeY, perc, minute2deg } from './util.js';
+import { Poly, minute2deg } from './util.js';
 
 const vm = Vue.component('Indicator', {
   template: `<line
-    :x1="computeX(cx, r - length, rotation)"
-    :y1="computeY(cy, r - length, rotation)"
-    :x2="computeX(cx, perc(r, 95), rotation)"
-    :y2="computeY(cy, perc(r, 95), rotation)"
+    :x1="poly.X(rotation, length)"
+    :y1="poly.Y(rotation, length)"
+    :x2="poly.X(rotation, 95)"
+    :y2="poly.Y(rotation, 95)"
     stroke="${color.indicator}"
-    :stroke-width="big ? perc(this.r, 6) : perc(this.r, 2)" />`,
+    :stroke-width="poly.R(width)" />`,
   props: ['cx', 'cy', 'r', 'n'],
-  methods: {
-    computeX, computeY, perc
-  },
   computed: {
-    big: function () {
+    poly() {
+      return new Poly(this.cx, this.cy, this.r);
+    },
+    big() {
       return this.n % 5 === 0;
     },
-    length: function () {
-      return perc(this.r, this.big ? 28 : 12);
+    length() {
+      return this.big ? 72 : 88;
     },
-    rotation: function () {
+    width() {
+      return this.big ? 6 : 2
+    },
+    rotation() {
       return minute2deg(this.n);
     }
   }
