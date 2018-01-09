@@ -11,21 +11,21 @@ const vm = Vue.component('Clock', {
       :r="poly.r"
       fill="${color.face}" />
     <image
-      :x="poly.cx - poly.perc(25)"
-      :y="poly.cy - poly.perc(70)"
-      :width="poly.perc(50)"
-      :height="poly.perc(50)"
+      :x="poly.cx - poly.R(25)"
+      :y="poly.cy - poly.R(70)"
+      :width="poly.R(50)"
+      :height="poly.R(50)"
       xlink:href="logo.svg" />
     <text
       text-anchor="middle"
-      :font-size="poly.perc(10)"
+      :font-size="poly.R(10)"
       :x="poly.cx"
-      :y="poly.cy - poly.perc(20)"
+      :y="poly.cy - poly.R(20)"
       fill="${color.hour}"
       >Ewerlöf</text>
     <path id="MadeInSwedenCurve"
       :d="poly.cmdXY('M', -165, 102) + poly.cmdXY(' Q', -180, 104) + ' ' + poly.XY(165, 102)" stroke="transparent" fill="transparent"/>
-    <text :font-size="poly.perc(6)" text-anchor="middle">
+    <text :font-size="poly.R(6)" text-anchor="middle">
       <textPath xlink:href="#MadeInSwedenCurve" startOffset="50%" fill="${color.hour}">
         Made in Sweden
       </textPath>
@@ -47,7 +47,7 @@ const vm = Vue.component('Clock', {
         :x2="poly.X(hourRot, 65)"
         :y2="poly.Y(hourRot, 65)"
         stroke="${color.hour}"
-        :stroke-width="poly.perc(8.3)"/>
+        :stroke-width="poly.R(8.3)"/>
     </g>
     <g>
       <line
@@ -56,7 +56,7 @@ const vm = Vue.component('Clock', {
         :x2="poly.X(minRot, 95)"
         :y2="poly.Y(minRot, 95)"
         stroke="${color.minute}"
-        :stroke-width="poly.perc(6.25)"/>
+        :stroke-width="poly.R(6.25)"/>
     </g>
     <g>
       <line
@@ -65,16 +65,16 @@ const vm = Vue.component('Clock', {
         :x2="poly.X(secRot, 60)"
         :y2="poly.Y(secRot, 60)"
         stroke="${color.second}"
-        :stroke-width="poly.perc(2)" />
+        :stroke-width="poly.R(2)" />
       <circle
         :cx="poly.X(secRot, 63)"
         :cy="poly.Y(secRot, 63)"
-        :r="poly.perc(8)"
+        :r="poly.R(8)"
         fill="${color.second}" />
       <circle
         :cx="poly.cx"
         :cy="poly.cy"
-        :r="poly.perc(5)"
+        :r="poly.R(5)"
         fill="${color.second}" />
     </g>
   </svg>`,

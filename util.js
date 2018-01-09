@@ -66,16 +66,16 @@ export class Poly {
     }
   }
 
-  perc(rPerc = 100) {
+  R(rPerc = 100) {
     return this.r * rPerc / 100;
   }
 
   X(rotDeg, rPerc = 100) {
-    return computeX(this.cx, this.perc(rPerc), rotDeg)
+    return computeX(this.cx, this.R(rPerc), rotDeg)
   }
 
   Y(rotDeg, rPerc = 100) {
-    return computeY(this.cy, this.perc(rPerc), rotDeg)
+    return computeY(this.cy, this.R(rPerc), rotDeg)
   }
 
   XY(rotDeg, rPerc = 100) {
