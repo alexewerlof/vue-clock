@@ -11,19 +11,14 @@ export const rgb = (r, g, b) => `rgb(${r}, ${g}, ${b})`;
 
 export const gray = grayLevel => rgb(grayLevel, grayLevel, grayLevel);
 
+// TODO: only needed in Indicator
 export function computeX(cx, r, rotation) {
   return cx + Math.sin(toRadians(rotation)) * r;
 }
 
+// TODO: only needed in Indicator
 export function computeY(cy, r, rotation) {
   return cy - Math.cos(toRadians(rotation)) * r;
-}
-
-export function computeXY(cx, cy, r, rotation) {
-  return {
-    x: computeX(cx, r, rotation),
-    y: computeY(cy, r, rotation)
-  };
 }
 
 // Calculate percentage on an absolute value
@@ -71,11 +66,11 @@ export class Poly {
   }
 
   X(rotDeg, rPerc = 100) {
-    return computeX(this.cx, this.R(rPerc), rotDeg)
+    return this.cx + Math.sin(toRadians(rotDeg)) * this.R(rPerc);
   }
 
   Y(rotDeg, rPerc = 100) {
-    return computeY(this.cy, this.R(rPerc), rotDeg)
+    return this.cy - Math.cos(toRadians(rotDeg)) * this.R(rPerc);
   }
 
   XY(rotDeg, rPerc = 100) {
