@@ -1,6 +1,6 @@
 import Vue from './node_modules/vue/dist/vue.esm.browser.js';
 import './Indicator.js';
-import { hour2degF, minute2degF, second2degF, computeX, computeY, Poly } from './util.js';
+import { hour2degF, minute2degF, second2degF, Poly } from './util.js';
 import { color } from './settings.js';
 
 const vm = Vue.component('Clock', {
