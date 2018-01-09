@@ -1,6 +1,6 @@
 import Vue from './node_modules/vue/dist/vue.esm.browser.js';
 import './Indicator.js';
-import { hour2deg, minute2deg, second2deg, computeX, computeY } from './util.js';
+import { hour2degF, minute2degF, second2degF, computeX, computeY } from './util.js';
 import { color } from './settings.js';
 
 const vm = Vue.component('Clock', {
@@ -107,13 +107,13 @@ const vm = Vue.component('Clock', {
       return Math.min(this.width, this.height) / 2;
     },
     hourRotation: function () {
-      return hour2deg(this.hour);
+      return hour2degF(this.hour, 5);
     },
     minuteRotation: function () {
-      return minute2deg(this.minute);
+      return minute2degF(this.minute, 12);
     },
     secondRotation: function () {
-      return second2deg(this.second);
+      return second2degF(this.second, 30);
     }
   }
 });

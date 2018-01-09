@@ -32,9 +32,26 @@ export function perc(x, percentage = 100, natural = false) {
   return natural ? Math.round(ret) : ret;
 }
 
-export function floor(x, resolution = 1, digits = 2) {
+/** @param {number} steps1 - number of steps between each two natural numbers */
+export function stepz(x, steps1 = 1) {
+  return Math.floor(x * steps1) / steps1;
+}
+
+export function fracDigits(x, frac) {
   const tenPows = 10 ** digits;
-  return Math.floor(Math.floor(x / resolution) * tenPows * resolution) / tenPows;
+  return Math.roud(x * tenPows) / tenPows;
+}
+
+export function hour2degF(hour, steps1) {
+  return hour2deg(stepz(hour, steps1));
+}
+
+export function minute2degF(min, steps1) {
+  return minute2deg(stepz(min, steps1));
+}
+
+export function second2degF(sec, steps1) {
+  return second2deg(stepz(sec, steps1));
 }
 
 // This is not used yet but is an idea that can make things easier in the future

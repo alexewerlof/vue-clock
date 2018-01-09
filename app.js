@@ -1,6 +1,5 @@
 import Vue from './node_modules/vue/dist/vue.esm.browser.js';
 import './Clock.js';
-import { floor } from './util.js';
 
 let intervalId;
 
@@ -27,9 +26,9 @@ function updateTime() {
     const second = now.getSeconds() + now.getMilliseconds() / 1000;
     const minute = now.getMinutes() + second / 60;
     const hour = now.getHours() + minute / 60;
-    vm.hour = floor(hour, 0.2);
-    vm.minute = floor(minute, 1/12);
-    vm.second = floor(second, 0.01);
+    vm.hour = hour
+    vm.minute = minute;
+    vm.second = second;
     vm.width = document.body.clientWidth;
     vm.height = document.body.clientHeight;
 }
